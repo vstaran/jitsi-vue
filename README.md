@@ -1,10 +1,9 @@
-# jitsi-vue
+# Jitsi video conference (on vue)
 
 ## Project setup
-```
-npm install
-```
-
+    1. npm install
+    2. rename '.env.example' to '.env'  
+    
 ### Compiles and hot-reloads for development
 ```
 npm run serve
