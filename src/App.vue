@@ -10,6 +10,8 @@
 <script>
 import { connect, createAndJoinRoom, createTracksAndAddToRoom } from './utils/jitsiUtils';
 import JitsiMeetJS from '@lyno/lib-jitsi-meet';
+import { config } from 'dotenv';
+config();
 
 export default {
   name: 'App',
@@ -34,7 +36,7 @@ export default {
     },
 
     connect() {
-      const roomName = 'my-secret-conference';
+      const roomName = process.env.VUE_APP__ROOM_NAME;
       connect(roomName).then(connection => {
         return createAndJoinRoom(connection, roomName);
       })
@@ -45,6 +47,15 @@ export default {
       .catch(error => console.error(error));
     }
   },
+
+  beforeMount() {
+    console.log(': ' + process.env.VUE_APP__DOMAIN);
+    console.log(': ' + process.env.VUE_APP__ROOM_NAME);
+    console.log(': ' + process.env.VUE_APP__USER_NAME);
+    console.log(': ' + process.env.VUE_APP__USER_PASSWORD);
+  },
+
+
   mounted() {
     this.connect()
   },

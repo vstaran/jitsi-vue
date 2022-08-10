@@ -1,16 +1,19 @@
+import { config } from 'dotenv';
+config();
+
 var subdomain = "";
 if (subdomain) {
     subdomain = subdomain.substr(0,subdomain.length-1).split('.').join('_').toLowerCase() + '.';
 }
 
-const domain = '8x8.vc'
+const domain = process.env.VUE_APP__DOMAIN
 
 export default {
     hosts: {
         domain: domain,
 
         muc: 'conference.'+subdomain+domain, // FIXME: use XEP-0030
-        focus: 'focus.meet.jit.si',
+        focus: `focus.${domain}`,
     },
     serviceUrl: `wss://${domain}/xmpp-websocket`,
     disableSimulcast: false,

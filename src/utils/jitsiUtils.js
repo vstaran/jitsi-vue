@@ -1,6 +1,8 @@
 import JitsiMeetJS from '@lyno/lib-jitsi-meet';
 import $ from 'jquery';
 import options from '../options/config';
+import { config } from 'dotenv';
+config();
 
 window.$ = $;
 
@@ -26,7 +28,16 @@ export function createAndJoinRoom(connection, roomName) {
     room.on(JitsiMeetJS.events.conference.CONFERENCE_JOINED, () => {
       resolve(room);
     });
-    room.join();
+
+    if(process.env.VUE_APP__USER_NAME) {
+      room.setDisplayName(process.env.VUE_APP__USER_NAME);
+    }
+
+    if(process.env.VUE_APP__USER_PASSWORD) {
+      room.join(process.env.VUE_APP__USER_PASSWORD);
+    } else {
+      room.join();
+    }
   });
 }
 
