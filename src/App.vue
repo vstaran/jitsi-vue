@@ -45,6 +45,9 @@ export default {
       .catch(error => console.error(error));
     }
   },
+  mounted() {
+    this.connect()
+  },
 }
 </script>
 
