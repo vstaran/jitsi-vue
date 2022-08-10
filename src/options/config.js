@@ -11,7 +11,8 @@ const domain = process.env.VUE_APP__DOMAIN
 export default {
     hosts: {
         domain: domain,
-
+        anonymousdomain: `guest.${domain}`,
+        authdomain: `${domain}`,
         muc: 'conference.'+subdomain+domain, // FIXME: use XEP-0030
         focus: `focus.${domain}`,
     },
@@ -42,12 +43,25 @@ export default {
     },
     enableP2P: true, // flag to control P2P connections
     // New P2P options
+    // p2p: {
+    //     enabled: true,
+    //     preferH264: true,
+    //     disableH264: true,
+    //     useStunTurn: true // use XEP-0215 to fetch STUN and TURN servers for the P2P connection
+    // },
     p2p: {
         enabled: true,
-        preferH264: true,
-        disableH264: true,
-        useStunTurn: true // use XEP-0215 to fetch STUN and TURN servers for the P2P connection
+        enableUnifiedOnChrome: false,
+        iceTransportPolicy: 'all',
+        preferredCodec: 'H264',
+        disabledCodec: '',
+        backToP2PDelay: 5,
+        // stunServers: [
+        //     { urls: 'stun:jitsi-meet.example.com:3478' },
+        //     { urls: 'stun:meet-jit-si-turnrelay.jitsi.net:443' }
+        // ]
     },
+
     useStunTurn: true, // use XEP-0215 to fetch TURN servers for the JVB connection
     useTurnUdp: false,
     websocket: `wss://${domain}/xmpp-websocket`, // FIXME: use xep-0156 for that
@@ -90,7 +104,7 @@ export default {
 
     hiddenDomain: `recorder.${domain}`,
     dropbox: {
-        appKey: '3v5iyto7n7az02w'
+        appKey: 'DROPBOX_APP_KEY'
     },
     transcribingEnabled: false,
     enableRecording: true,
