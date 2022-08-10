@@ -11,7 +11,7 @@ const domain = process.env.VUE_APP__DOMAIN
 export default {
     hosts: {
         domain: domain,
-        anonymousdomain: `guest.${domain}`,
+        //anonymousdomain: `guest.${domain}`,
         authdomain: `${domain}`,
         muc: 'conference.'+subdomain+domain, // FIXME: use XEP-0030
         focus: `focus.${domain}`,
