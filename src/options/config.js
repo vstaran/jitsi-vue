@@ -2,14 +2,17 @@ var subdomain = "";
 if (subdomain) {
     subdomain = subdomain.substr(0,subdomain.length-1).split('.').join('_').toLowerCase() + '.';
 }
+
+const domain = '8x8.vc'
+
 export default {
     hosts: {
-        domain: 'meet.jit.si',
+        domain: domain,
 
-        muc: 'conference.'+subdomain+'meet.jit.si', // FIXME: use XEP-0030
+        muc: 'conference.'+subdomain+domain, // FIXME: use XEP-0030
         focus: 'focus.meet.jit.si',
     },
-    serviceUrl: 'wss://meet.jit.si/xmpp-websocket',
+    serviceUrl: `wss://${domain}/xmpp-websocket`,
     disableSimulcast: false,
     enableRemb: true,
     enableTcc: true,
@@ -29,7 +32,7 @@ export default {
         }
     },
     enableInsecureRoomNameWarning: true,
-    externalConnectUrl: 'https://meet.jit.si/http-pre-bind',
+    externalConnectUrl: `https://${domain}/http-pre-bind`,
     analytics: {
         amplitudeAPPKey: "fafdba4c3b47fe5f151060ca37f02d2f",
         whiteListedEvents: [ 'conference.joined', 'page.reload.scheduled', 'rejoined', 'transport.stats' ],
@@ -44,7 +47,7 @@ export default {
     },
     useStunTurn: true, // use XEP-0215 to fetch TURN servers for the JVB connection
     useTurnUdp: false,
-    websocket: 'wss://meet.jit.si/xmpp-websocket', // FIXME: use xep-0156 for that
+    websocket: `wss://${domain}/xmpp-websocket`, // FIXME: use xep-0156 for that
 
 
     clientNode: 'http://jitsi.org/jitsimeet', // The name of client node advertised in XEP-0115 'c' stanza
@@ -82,7 +85,7 @@ export default {
 
     disableLocalVideoFlip: true,
 
-    hiddenDomain: 'recorder.meet.jit.si',
+    hiddenDomain: `recorder.${domain}`,
     dropbox: {
         appKey: '3v5iyto7n7az02w'
     },
@@ -130,7 +133,7 @@ export default {
             type: "operational",
             source: 'page.load'
         },
-        server: "meet.jit.si"
+        server: `${domain}`
     },
     deploymentInfo: {
         environment: 'meet-jit-si',
