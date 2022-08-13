@@ -33,6 +33,8 @@ export function createAndJoinRoom(connection, roomName) {
       room.setDisplayName(process.env.VUE_APP__USER_NAME);
     }
 
+    room.setSenderVideoConstraint(process.env.VUE_APP__USER_VIDEO_CONSTRAINT)
+
     if(process.env.VUE_APP__USER_PASSWORD) {
       room.join(process.env.VUE_APP__USER_PASSWORD);
     } else {
