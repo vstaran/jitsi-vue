@@ -1,15 +1,22 @@
 <template>
   <div id="app">
-    <h1>Performance</h1>
-    <button @click="connect">Connect</button>
-    <video v-for="track in videoTracks" :key="`track-${track.getId()}`" :ref="track.getId()" autoplay />
-    <audio v-for="track in audioTracks" :key="`track-${track.getId()}`" :ref="track.getId()" autoplay />
+    <fullscreen v-model="fullscreen">
+      <button id="btn_fs" type="button" @click="toggle" v-if="!fullscreen">Fullscreen</button>
+
+      <!-- <button @click="connect">Connect</button> -->
+      <video v-for="track in videoTracks" :key="`track-${track.getId()}`" :ref="track.getId()" autoplay />
+      <audio v-for="track in audioTracks" :key="`track-${track.getId()}`" :ref="track.getId()" autoplay />
+    </fullscreen>
   </div>
 </template>
 
 <script>
-import { connect, createAndJoinRoom, createTracksAndAddToRoom } from './utils/jitsiUtils';
-import JitsiMeetJS from '@lyno/lib-jitsi-meet';
+import { connect, createAndJoinRoom, createTracksAndAddToRoom } from './utils/jitsiUtils'
+import JitsiMeetJS from '@lyno/lib-jitsi-meet'
+import VueFullscreen from 'vue-fullscreen'
+import Vue from 'vue'
+Vue.use(VueFullscreen)
+
 import { config } from 'dotenv';
 config();
 
@@ -18,16 +25,17 @@ export default {
 
   data() {
     return {
+      fullscreen: false,
       videoTracks: [],
-      audioTracks: []
+      audioTracks: [],
     }
   },
 
   methods: {
     addTrack(track) {
-      if (track.getType() === 'video') {
+      if (track.getType() === 'video' && !!+process.env.VUE_APP__ROOM_VIDEO) {
         this.videoTracks.push(track);
-      } else if (track.getType() === 'audio') {
+      } else if (track.getType() === 'audio' && !!+process.env.VUE_APP__ROOM_AUDIO) {
         this.audioTracks.push(track);
       }
       this.$nextTick().then(() => {
@@ -45,6 +53,10 @@ export default {
         createTracksAndAddToRoom(room);
       })
       .catch(error => console.error(error));
+    },
+
+    toggle () {
+      this.fullscreen = !this.fullscreen
     }
   },
 
@@ -55,11 +67,11 @@ export default {
     console.log(': ' + process.env.VUE_APP__USER_PASSWORD);
   },
 
-
   mounted() {
     this.connect()
   },
 }
+
 </script>
 
 <style>
@@ -71,4 +83,18 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+video {
+  position: fixed; right: 0; bottom: 0;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto; z-index: -100;
+  background-size: cover;
+}
+
+#btn_fs {
+  opacity: 0.4;
+}
 </style>
+
+
+
