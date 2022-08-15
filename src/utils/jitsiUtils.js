@@ -48,16 +48,17 @@ export function connect(roomName) {
     let optionsWithRoom = { ...options };
     optionsWithRoom.serviceUrl = options.serviceUrl + `?room=${roomName}`;
 
-    const connection = new JitsiMeetJS.JitsiConnection(null, null, optionsWithRoom);
+    const token = (process.env.VUE_APP__TOKEN?.length)? process.env.VUE_APP__TOKEN:null
+    const connection = new JitsiMeetJS.JitsiConnection(null, token, optionsWithRoom);
 
     connection.addEventListener(JitsiMeetJS.events.connection.CONNECTION_ESTABLISHED, () => {
       resolve(connection);
     });
-    connection.addEventListener(JitsiMeetJS.events.connection.CONNECTION_FAILED, () => {
-      reject('The connection failed.');
+    connection.addEventListener(JitsiMeetJS.events.connection.CONNECTION_FAILED, (e) => {
+      reject("The connection failed. - " + e);
     });
-    connection.addEventListener(JitsiMeetJS.events.connection.CONNECTION_DISCONNECTED, () => {
-      console.log("Connection disconnected");
+    connection.addEventListener(JitsiMeetJS.events.connection.CONNECTION_DISCONNECTED, (e) => {
+      console.log("Connection disconnected - " + e);
     });
 
     connection.connect();

@@ -44,6 +44,8 @@ export default {
     },
 
     connect() {
+      console.log('methods:connect')
+
       const roomName = process.env.VUE_APP__ROOM_NAME;
       connect(roomName).then(connection => {
         return createAndJoinRoom(connection, roomName);
