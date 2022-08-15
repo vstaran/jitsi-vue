@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <fullscreen v-model="fullscreen">
-      <button id="btn_fs" type="button" @click="toggle" v-if="!fullscreen">Fullscreen</button>
+      <button id="btn_fs" type="button" @click="toggle" v-if="!fullscreen">F</button>
 
       <!-- <button @click="connect">Connect</button> -->
-      <video v-for="track in videoTracks" :key="`track-${track.getId()}`" :ref="track.getId()" autoplay />
+      <video v-for="track in videoTracks.slice(0, 1)" :key="`track-${track.getId()}`" :ref="track.getId()" autoplay />
       <audio v-for="track in audioTracks" :key="`track-${track.getId()}`" :ref="track.getId()" autoplay />
     </fullscreen>
   </div>
@@ -79,9 +79,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 video {
@@ -93,6 +91,8 @@ video {
 
 #btn_fs {
   opacity: 0.4;
+  background: transparent;
+  border: 1px solid;
 }
 </style>
 
